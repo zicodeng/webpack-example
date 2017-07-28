@@ -16,7 +16,7 @@ module.exports = {
 		// in which the currently executing file is located
 		path: __dirname + "/dist",
 		// Output file name
-		filename: "[name]-bundle.js"
+		filename: "[name]-bundle.min.js"
 	},
 
 	// Watch file changes,
