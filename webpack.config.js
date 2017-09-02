@@ -37,6 +37,7 @@ module.exports = {
 				exclude: /node_modules/,
 				// Define loader plugins.
 				query: {
+					// We can also create a .babelrc file and specify presets there.
 					presets: ["es2015", "react"]
 				}
 			},
@@ -49,6 +50,19 @@ module.exports = {
 				test: /\.css$|\.scss$/,
 			}
 		]
+	},
+
+	// webpack-dev-server is a little Node.js Express server.
+	// When we run "npm run start,"
+	// webpack-dev-server will look for this settings.
+	devServer: {
+		// The webpack-dev-server will serve the files in the current directory, 
+		// unless you configure a specific content base.
+		// contentBase: __dirname + "...", 
+		// True to enable inline mode: it will automatically refresh the page on change, no URL change required.
+		// False to enable iframe mode: URL change required, http://localhost:8080/webpack-dev-server/index.html
+		inline: true,
+		port: 8080
 	},
 
 	// Webpack plugins
