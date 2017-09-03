@@ -1,5 +1,5 @@
 {
-  "name": "webpack-tutorial",
+  "name": "webpack-example",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -20,6 +20,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "sass-loader": "^6.0.6",
+    "source-map-loader": "^0.2.1",
     "style-loader": "^0.18.2",
     "webpack": "^3.4.1",
     "webpack-dev-server": "^2.7.1"

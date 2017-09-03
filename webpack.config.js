@@ -23,6 +23,9 @@ module.exports = {
 	// so we don't have to run build every time file changes.
 	watch: true,
 
+	// Enable source map for debugging webpack's output.
+    devtool: "source-map",
+
 	// Configure how modules are resolved.
 	resolve: {
 		// What extensions can be left off when importing.
@@ -59,7 +62,12 @@ module.exports = {
 				// Loader executing order: sass-loader -> css-loader -> style-loader
 				loader: "style-loader!css-loader!sass-loader",
 				test: /\.css$|\.scss$/,
-			}
+			},
+            {
+                loader: "source-map-loader",
+                test: /\.js$/,
+                exclude: /node_modules/
+            }
 		]
 	},
 
@@ -69,7 +77,8 @@ module.exports = {
 	devServer: {
 		// The webpack-dev-server will serve the files in the current directory, 
 		// unless you configure a specific content base.
-		// contentBase: __dirname + "...", 
+		// contentBase: __dirname + "...",
+		 
 		// True to enable inline mode: it will automatically refresh the page on change, no URL change required.
 		// False to enable iframe mode: URL change required, http://localhost:8080/webpack-dev-server/index.html
 		inline: true,
@@ -80,7 +89,9 @@ module.exports = {
 	plugins: [
 		// Minify scripts.
 		new webpack.optimize.UglifyJsPlugin({
-			minimize: true
+			minimize: true,
+			// Enable source map when uglifying code.
+            sourceMap: true
 		}),
 
 		// Serve minified react code.

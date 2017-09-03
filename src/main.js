@@ -3,4 +3,4 @@ require("./style.scss");
 
 const message = "Hello World!";
 
-alert(message);
+console.log(message);
