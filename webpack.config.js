@@ -49,7 +49,8 @@ module.exports = {
 				test: /\.js$|\.jsx$/,
 				// Exclude folders or files we don't want this loader to run.
 				exclude: /node_modules/,
-				// Define loader plugins.
+				// Loader plugins.
+				// For babel loader, defining presets and plugins in query is the same as in .babelrc.
 				query: {
 					// We can also create a .babelrc file and specify presets there.
 					presets: ["es2015", "react"]
