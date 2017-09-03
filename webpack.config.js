@@ -95,7 +95,7 @@ module.exports = {
             sourceMap: true
 		}),
 
-		// Serve minified react code.
+		// Serve production build code.
 		new webpack.DefinePlugin({
 			"process.env": {
 				"NODE_ENV": JSON.stringify("production")
