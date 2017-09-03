@@ -5,7 +5,7 @@ module.exports = {
 	// Define multiple entry points.
 	entry: {
 		main: "./src/main.js",
-		component: "./src/component.jsx"
+		app: "./src/app.jsx"
 	},
 
 	// Define output path.
@@ -22,6 +22,17 @@ module.exports = {
 	// Watch file changes,
 	// so we don't have to run build every time file changes.
 	watch: true,
+
+	// Configure how modules are resolved.
+	resolve: {
+		// What extensions can be left off when importing.
+		// Default: .js, .json
+		extensions: [".js", ".json", ".jsx"],
+
+		// What directories should be searched when resolving modules.
+		// Default: node_modules
+		modules: ["node_modules", __dirname + "/src"]
+	},
 
 	// Define plugins.
 	module: {
