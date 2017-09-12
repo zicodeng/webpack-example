@@ -1,4 +1,11 @@
-var webpack = require("webpack");
+const webpack = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const extractSass = new ExtractTextPlugin({
+	filename: "[name].[contenthash].min.css",
+	disable: process.env.NODE_ENV === "development"
+});
 
 module.exports = {
 
@@ -30,45 +37,67 @@ module.exports = {
 	resolve: {
 		// What extensions can be left off when importing.
 		// Default: .js, .json
-		extensions: [".js", ".json", ".jsx"],
+		extensions: [".js", ".jsx"],
 
 		// What directories should be searched when resolving modules.
 		// Default: node_modules
-		modules: ["node_modules", __dirname + "/src"]
+		modules: ["node_modules", "./src"]
 	},
 
 	// Define plugins.
 	module: {
-		// loaders is an array of loader objects.
-		loaders: [
-			{
-				// Loader name
-				loader: "babel-loader",
-				// We don't want this loader to run every single file.
-				// test property specifies types of files this loader should only be interested in.
+		// Equivalent to loaders in old version webpack.
+		rules: [
+			{	
+				// Check file types.
+				// Different file types are applied with different loaders.
 				test: /\.js$|\.jsx$/,
-				// Exclude folders or files we don't want this loader to run.
+				// Exclude folders or files we don't want webpack to run test.
+				// This will save webpack loading time.
 				exclude: /node_modules/,
-				// Loader plugins.
-				// For babel loader, defining presets and plugins in query is the same as in .babelrc.
-				query: {
-					// We can also create a .babelrc file and specify presets there.
-					presets: ["es2015", "react"]
-				}
+				// use takes an array of loaders.
+				// These loaders will be used when the test is passed.
+				use: [
+					{
+						// Loader name
+						loader: "babel-loader",
+						// Loader plugins.
+						// For babel loader, defining presets and plugins in query is the same as in .babelrc.
+						query: {
+							// We can also create a .babelrc file and specify presets there.
+							presets: ["es2015", "react"]
+						}
+					}
+				]
 			},
-			{
-				// css-loader loads styles into the JavaScript file.
-				// style-loader adds those styles into the DOM.
-				// ! means pipe.
-				// Loader executing order: sass-loader -> css-loader -> style-loader
-				loader: "style-loader!css-loader!sass-loader",
+			{	
 				test: /\.css$|\.scss$/,
-			},
-            {
-                loader: "source-map-loader",
-                test: /\.js$/,
-                exclude: /node_modules/
-            }
+				exclude: /node_modules/,
+				// Loaders can be chained by passing multiple loaders.
+				// The executing order is from right to left (last to first configured)
+				use: extractSass.extract({
+					// Nested use.
+					use: [
+						{
+							// css-loader translates CSS into the CommonJS.
+							loader: "css-loader",
+							options: {
+								sourceMap: true,
+								minimize: true
+							}
+						},
+						{	
+							// sass-loader compiles SASS to CSS.
+							loader: "sass-loader",
+							options: {
+								includePath: [__dirname + "/src/sass-partials"],
+								sourceMap: true
+							}
+						}
+					],
+					fallback: "style-loader"
+				})
+			}
 		]
 	},
 
@@ -76,9 +105,9 @@ module.exports = {
 	// When we run "npm run start,"
 	// webpack-dev-server will look for this settings.
 	devServer: {
-		// The webpack-dev-server will serve the files in the current directory, 
+		// The webpack-dev-server will serve the files in the current directory,
 		// unless you configure a specific content base.
-		// contentBase: __dirname + "...",
+		contentBase: __dirname + "/dist",
 		 
 		// True to enable inline mode: it will automatically refresh the page on change, no URL change required.
 		// False to enable iframe mode: URL change required, http://localhost:8080/webpack-dev-server/index.html
@@ -106,6 +135,20 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			$: "jquery",
 			jQuery: "jquery"
-		})
+		}),
+
+		// This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. 
+		// This is especially useful for webpack bundles 
+		// that include a hash in the filename which changes every compilation. 
+		// You can either let the plugin generate an HTML file for you, 
+		// supply your own template using lodash templates or use your own loader.
+		new HtmlWebpackPlugin({
+			title: "Webpack Example",
+			filename: "index.html",
+			template: "./index.ejs" // Use custom template.
+		}),
+
+		// Extract JS module into a separate file.
+		extractSass
 	]
 };

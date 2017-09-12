@@ -1,0 +1,13 @@
+@import "./sass-partials/colors";
+
+ul {
+	li {
+		p {
+			color: yellow;
+		}
+
+		h4 {
+			color: $color-primary;
+		}
+	}
+}

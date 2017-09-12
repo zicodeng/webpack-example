@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 
 import Component from "./component";
 
+// Import stylesheets.
+require("./app-style.css");
+
 class App extends React.Component {
 	render() {
 		return (
@@ -14,6 +17,6 @@ class App extends React.Component {
 	}
 }
 
-ReactDOM.render(<App />, document.getElementById("component"));
+ReactDOM.render(<App />, document.getElementById("react-component"));
 
 export default App;

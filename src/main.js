@@ -1,5 +1,4 @@
-require("./main.css");
-require("./style.scss");
+require("./general-style.scss");
 
 const message = "Hello World!";
 

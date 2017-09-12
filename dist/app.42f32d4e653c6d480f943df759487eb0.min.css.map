@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/src/app-style.css"],"names":[],"mappings":"AAAA,iBACC,qBAAuB,CAGxB,GACC,SAAU","file":"app.42f32d4e653c6d480f943df759487eb0.min.css","sourcesContent":["#react-component {\r\n\tbackground-color: black;\r\n}\r\n\r\nh1 {\r\n\tcolor: red;\r\n}\r\n\n\n\n// WEBPACK FOOTER //\n// ./src/src/app-style.css"],"sourceRoot":""}
