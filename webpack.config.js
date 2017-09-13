@@ -76,6 +76,9 @@ module.exports = {
 			{	
 				test: /\.css$|\.scss$/,
 				// Exclude everything in node_modules except bootstrap.
+				// Because bootstrap css is not exported,
+				// so we want webpack to run test on bootstrap source file,
+				// which lives in node_modules folder.
 				exclude: /node_modules\/(?!bootstrap\/).*/,
 				// Loaders can be chained by passing multiple loaders.
 				// The executing order is from right to left (last to first configured)
@@ -133,6 +136,14 @@ module.exports = {
             sourceMap: true
 		}),
 
+		// This plugin creates a separate source file (known as chunk),
+		// consisting common modules shared between multiple entry points.
+		// By splitting up our source code, our app will gain performance,
+		// because the browser now doesn't have to load overlapped code multiple times.
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "commons",
+		}),
+
 		// Serve production build code.
 		new webpack.DefinePlugin({
 			"process.env": {
@@ -145,9 +156,9 @@ module.exports = {
 			$: "jquery",
 			jQuery: "jquery",
 			"window.jQuery": "jquery"
-		}),
+		}), 
 
-		// This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. 
+		// Simplifies creation of HTML files to serve your webpack bundles. 
 		// This is especially useful for webpack bundles 
 		// that include a hash in the filename which changes every compilation. 
 		// You can either let the plugin generate an HTML file for you, 
@@ -157,16 +168,17 @@ module.exports = {
 			filename: "index.html",
 			template: "./client/assets/templates/index.ejs", // Use custom template.
 			// Only include chunks that are relevant to this html file.
-			// For example, our index.html file only relies on utils.js and utils.css,
+			// For example, our index.html file only relies on 
+			// index-bundle.min.js and index-style.min.css,
 			// so we don't want it to includes app.js or app.css.
-			chunks: ["index"]
+			chunks: ["commons", "index"]
 		}),
 
 		new HtmlWebpackPlugin({
 			title: "App | Webpack Example",
 			filename: "app.html",
 			template: "./client/assets/templates/app.ejs",
-			chunks: ["app"]
+			chunks: ["commons", "app"]
 		}),
 
 		// Extract JS module into a separate file.
