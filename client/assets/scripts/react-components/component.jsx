@@ -4,7 +4,7 @@ class Component extends React.Component {
     render() {
 		return (
 			<div>
-				<h1>I am a React component!</h1>
+				<h2>I am a React component!</h2>
 			</div>
 		)
 	}

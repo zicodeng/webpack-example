@@ -1,0 +1,21 @@
+// Before using these nice and clean shorthand import paths,
+// make sure to explicitly tell sass-loader to include their absolute paths
+// in options.includePaths.
+@import "compass";
+
+// Reset browser default
+@import "compass/reset";
+
+@import "helpers/colors";
+
+ul {
+	li {
+		p {
+			color: #00FF64;
+		}
+
+		h4 {
+			color: $color-primary;
+		}
+	}
+}
