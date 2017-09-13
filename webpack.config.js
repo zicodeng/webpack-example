@@ -42,7 +42,6 @@ var config = Object.keys(entries).map(function(entry) {
 			modules: ["node_modules", "./client/assets"]
 		},
 	
-		// Define plugins.
 		module: {
 			// Equivalent to loaders in old version webpack.
 			rules: [
